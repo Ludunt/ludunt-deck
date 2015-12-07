@@ -1,0 +1,45 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+def langLevel = 1.8
+
+sourceCompatibility = langLevel
+targetCompatibility = langLevel
+
+group = 'ludunt'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+
+    test {
+        groovy {
+            srcDirs = ['src/test/groovy']
+        }
+    }
+}
+
+dependencies {
+    testCompile 'org.codehaus.groovy:groovy-all:2.0.5'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+
+    testRuntime "cglib:cglib-nodep:3.1"          // allows mocking of classes (in addition to interfaces)
+    testRuntime "org.objenesis:objenesis:2.1"    // allows mocking of classes without default constructor (together with CGLIB)
+
+}
+
+idea {
+    project {
+        jdkName = langLevel
+        languageLevel = langLevel
+    }
+}
